@@ -1,11 +1,14 @@
 package com.example.demo.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Person {
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
     @Column
 	String name;
@@ -15,10 +18,19 @@ public class Person {
 	String password;
     @Column
 	String phone;
-    @Column
-	String pincode;
+    
     @Column
 	String referName;
+    
+    @OneToOne
+    Address address;
+    
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -48,12 +60,6 @@ public class Person {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	public String getPincode() {
-		return pincode;
-	}
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
 	}
 	public String getReferName() {
 		return referName;
