@@ -46,4 +46,11 @@ public class MainController {
 		result = personservice.findUser(searchKeyWord);
 		return result;
 	}
+	
+	@RequestMapping(value="/download/file", method= RequestMethod.GET)
+	public Map<String,Object> downloadFile(@RequestParam String urlString) {
+		Map<String,Object> result = new HashMap<>();
+		result = personservice.downloadFile(urlString);
+        return result;
+	}
 }
