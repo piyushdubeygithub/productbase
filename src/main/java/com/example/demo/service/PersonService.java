@@ -19,9 +19,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Address;
 import com.example.demo.domain.Person;
+import com.example.demo.domain.TicketDetails;
+import com.example.demo.domain.Train;
+import com.example.demo.form.BookForm;
+import com.example.demo.form.LoginForm;
 import com.example.demo.form.RegisterForm;
+import com.example.demo.form.StationForm;
 import com.example.demo.repository.AddressRepository;
 import com.example.demo.repository.PersonRepository;
+import com.example.demo.repository.TrainRepository;
 import com.example.demo.utility.SMTPMailSender;
 
 
@@ -29,6 +35,9 @@ import com.example.demo.utility.SMTPMailSender;
 public class PersonService {
 	@Autowired
 	PersonRepository personRepository;
+	
+	@Autowired
+	TrainRepository trainRepository;
 	
 	@Autowired
 	AddressRepository addressRepository;
@@ -39,7 +48,7 @@ public class PersonService {
 	@Value("${mypath}") 
     String mypath;
 	
-	public Map<String, Object> savePerson(RegisterForm registerForm) {
+/*	public Map<String, Object> savePerson(RegisterForm registerForm) {
 		Map<String,Object> result = new HashMap<>();
 		Address address = registerForm.copyAddress();
 		Person person = registerForm.copyPerson();
@@ -56,10 +65,97 @@ public class PersonService {
 			result.put("error", "User already exists");
 		}
         return result;
+	}*/
+	
+	public Map<String,Object> loginPerson(LoginForm loginForm){
+		Map<String,Object> result = new HashMap<>();
+		Person person = personRepository.findByUserName(loginForm.getUserName());
+        if(person != null) {
+        	String password = loginForm.getPassword();
+        	String savedPassword = person.getPassword();
+        	if(password.equals(savedPassword)) {
+        		result.put("success", "Login Successful");
+        	}else {
+            	result.put("error", "Password is incorrect");
+        	}
+        }else {
+        	result.put("error", "User does not exists");
+        }
+        return result;
+	}
+	
+	public Map<String,Object> registerPerson(RegisterForm registerForm){
+		Map<String,Object> result = new HashMap<>();
+		Person person1 = new Person();
+		person1.setAge(registerForm.getUserName());
+		person1.setName(registerForm.getName());
+		person1.setPassword(registerForm.getPassword());
+		person1.setUserName(registerForm.getUserName());
+		if(isUserExists(person1)) {
+	    	result.put("error", "user already registered");
+            return result;
+		}
+	    Person	person = personRepository.save(person1);
+	    if(person != null) {
+	        result.put("person", person);
+	        result.put("success", "registered successfully");
+	    }else {
+	    	result.put("error", "can not be registered");
+	    }
+        return result;
 	}
 	
 	
 	public boolean isUserExists(Person person) {
+		boolean isUserExists = false;
+		Person person1 = personRepository.findByUserName(person.getUserName());
+		if(person1 != null) {
+			isUserExists = true;
+		}
+		return isUserExists;
+	}
+	
+	public Map<String,Object> searchTrain(StationForm stationForm){
+		Map<String,Object> result = new HashMap<>();
+		List<Train> trainList1 = trainRepository.findByStoppageStations(stationForm.getSourceStation());
+		List<Train> trainList2 = trainRepository.findByStoppageStations(stationForm.getDestinationStation());
+        List<Train> finalList = new ArrayList<>();
+        for(Train t1: trainList1) {
+        	if(trainList2.contains(t1)) {
+        		finalList.add(t1);
+        	}
+        }
+        result.put("TrainList", finalList);
+        if(finalList.isEmpty()) {
+        	result.put("error", "train not found");
+        }
+		return result;
+	}
+	
+	
+	public Map<String,Object> bookTicket(BookForm bookForm){
+		Map<String,Object> result = new HashMap<>();
+		TicketDetails ticketDetails = new TicketDetails();
+		ticketDetails.setAge(bookForm.getAge());
+		ticketDetails.setDestinationStation(bookForm.getDestinationStation());
+		ticketDetails.setName(bookForm.getName());
+		ticketDetails.setSourceStation(bookForm.getSourceStation());
+		ticketDetails.setTrainName(bookForm.getTrainName());
+		
+        return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*public boolean isUserExists(Person person) {
 		boolean userExists = false;
 		if(!userExists) {
 			Person person1 = personRepository.findByEmailId(person.getEmailId());
@@ -68,16 +164,16 @@ public class PersonService {
 			}
 		}
 		return userExists;
-	}
+	}*/
 	
-	public Map<String,Object> getUser(Long id) {
+	/*public Map<String,Object> getUser(Long id) {
 		Map<String,Object> result = new HashMap<>();
 		Person person = personRepository.findOne(id);
 		result.put("person", person);
 		return result;
-	}
+	}*/
 	
-	public Map<String, Object> findUser(String searchKeyWord) {
+	/*public Map<String, Object> findUser(String searchKeyWord) {
 		Map<String,Object> result = new HashMap<>();
 		List<Person> personList = new ArrayList<Person>();
 		List<Address> addressList = addressRepository.findByState(searchKeyWord);
@@ -134,5 +230,5 @@ public class PersonService {
 	
 	public void verifyUser() {
 		
-	}
+	}*/
 }

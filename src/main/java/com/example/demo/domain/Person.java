@@ -8,7 +8,43 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Person {
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+	
+	    @Column
+		String name;
+	    @Column
+		String userName;
+	    @Column
+		String password;
+	    @Column
+		String age;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getUserName() {
+			return userName;
+		}
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public String getAge() {
+			return age;
+		}
+		public void setAge(String age) {
+			this.age = age;
+		}
+	    
+	    
+	
+  /*  @Id @GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
     @Column
 	String name;
@@ -67,6 +103,6 @@ public class Person {
 	public void setReferName(String referName) {
 		this.referName = referName;
 	}
-	
+	*/
 	
 }

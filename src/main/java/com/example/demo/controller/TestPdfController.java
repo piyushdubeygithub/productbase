@@ -1,16 +1,20 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Scanner;
 
-import com.example.demo.domain.CrickScore;
-
 public class TestPdfController {
-	public static void main(String[] args) {/*
-		 
+	public static void main(String[] args) {
+		
+		
+		Integer[] i = {1,2,3,45,6,7};
+		Character[] c = {'a','b','c','d'};
+		
+		int in=printData(1,54,89);
+		System.out.println(in);
+		String ch = printData("cghh","rdjtydyt","kjjhfr");
+		System.out.println(ch);
+		/*
 		//List scores = (List) new ArrayList<CrickScore>();
 		ArrayList<CrickScore> scores =  new ArrayList<CrickScore>();
 	    scores.add(new CrickScore("a", 3));
@@ -65,7 +69,7 @@ public class TestPdfController {
 		        n--;
 	}*/
 	//**************************************************************************
-		   Scanner sc = new Scanner(System.in);
+		/*   Scanner sc = new Scanner(System.in);
 		    int n = sc.nextInt();
 		    sc.nextLine();
 		    String toSearch = "HACKERCUP";
@@ -102,6 +106,52 @@ public class TestPdfController {
 		        }
 		        System.out.println("Case #"+cases+": "+countMin);
 		        n--;
-		    }
+		    }*/
+	/*	Display d = new Display();
+		MyThread t1 = new MyThread(d, "Riya");
+		MyThread t2 = new MyThread(d, "Piyush");
+		t1.start();
+		t2.start();*/
+		//*********************************************************************************
+        /*Scanner sc = new Scanner(System.in);		
+        int t = sc.nextInt();
+        int cases =0;
+        while(t>0) {
+        	t--;
+        	cases++;
+        	long n = sc.nextLong();
+        	long k = sc.nextLong();
+        	long v = sc.nextLong();
+        	sc.nextLine();
+        	int attSeen = 0;
+        	ArrayList<String> list = new ArrayList<>();
+        	for(int i=0;i<n;i++) {
+        		list.add(sc.nextLine());
+        	}
+        	long index = ((v-1)*k)%n;
+        	System.out.print("Case #"+cases+": ");
+        	long length = n-index;
+        
+        	for(long i=index;i<n;i++) {
+        		if(attSeen==k) {
+        			break;
+        		}
+        		System.out.print(list.get((int) i)+" ");
+        		attSeen++;
+        	}
+        	
+        	System.out.println();
+        }*/
+	}
+
+	private static <T extends Comparable<T>> T printData(T a,T b, T c) {
+		T max =a;
+		if(b.compareTo(a)>0) {
+			max = b;
+		}
+		if(c.compareTo(max)>0) {
+			max=c;
+		}
+		return max;
 	}
 }

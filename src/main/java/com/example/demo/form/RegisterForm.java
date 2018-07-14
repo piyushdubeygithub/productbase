@@ -1,13 +1,40 @@
 package com.example.demo.form;
 
-import javax.persistence.Column;
-
-import com.example.demo.domain.Address;
-import com.example.demo.domain.Person;
 
 public class RegisterForm {
-
+	
 	String name;
+	String userName;
+	String password;
+	String age;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+	
+	
+
+	/*String name;
 	String emailId;
 	String password;
 	String phone;
@@ -88,6 +115,6 @@ public class RegisterForm {
 		address.setPincode(pincode);
 		address.setState(state);
 		return address;
-	}
+	}*/
 	
 }
